@@ -1,18 +1,30 @@
 # Load the shiny, ggplot2, and dplyr libraries
-
+library(“shiny”)
+library(“ggplot2”)
+library(“dplyr”)
 
 # You will once again be working with the `diamonds` data set provided by ggplot2
 # Use dplyr's `sample_n()` function to get a random 3000 rows from the data set
 # Store this sample in a variable `diamonds.sample`
-
+diamonds.sample <- sample_n(diamonds,3000)
 
 # For convenience store the `range()` of values for the `price` and `carat` values
 # for the ENTIRE diamonds dataset.
-
-
+PriceRange <- range(select(diamonds,price))
+CaratRange <- range(select(diamonds,carat))
 
 # Define a UI using a fluidPage layout
+UI <- fluidPage(
+   titlePanel( “Diamond Viewer”, windowTitle = “Diamond Viewer”  )
 
+   sidebarPanel(
+       sliderInput('slider’, label = “Price(in Dollar)”, min= PriceRange[1], max=PriceRange[2])
+   )
+
+    sidebarPanel(
+       sliderInput('slider’, label = “Carats” , min= CaratRange[1], max=CaratRange[2])
+   )
+)
 
   # Include a `titlePanel` with the title "Diamond Viewer"
 
